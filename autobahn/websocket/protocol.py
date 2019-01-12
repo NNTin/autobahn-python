@@ -26,6 +26,7 @@
 
 from __future__ import absolute_import
 
+import asyncio
 import binascii
 import hashlib
 import base64
@@ -857,6 +858,7 @@ class WebSocketProtocol(object):
             self._closeConnection(abort)
         else:
             self.log.debug('dropping connection to peer {peer} skipped - connection already closed', peer=self.peer)
+        asyncio.get_event_loop().stop()
 
     def _fail_connection(self, code=CLOSE_STATUS_CODE_GOING_AWAY, reason=u'going away'):
         """
